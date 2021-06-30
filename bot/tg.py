@@ -105,3 +105,11 @@ def check(message: types.Message):
     text, markup = keyboards.menu(province_id, district_id, message.text)
     bot.send_message(message.chat.id, text, reply_markup=markup)
     send_analytics(message.chat.id, message.text, user)
+
+
+@bot.message_handler(commands=['/count'])
+def count(message: types.Message):
+    text = User.objects.count()
+    bot.reply_to(message, text)
+    user = User.objects.get(pk=message.chat.id)
+    send_analytics(message.chat.id, message.text, user)
