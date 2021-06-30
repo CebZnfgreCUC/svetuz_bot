@@ -43,6 +43,14 @@ def start(message: types.Message):
     send_analytics(message.chat.id, message.text, user)
 
 
+@bot.message_handler(commands=['count'])
+def count(message: types.Message):
+    text = User.objects.count()
+    bot.reply_to(message, text)
+    user = User.objects.get(pk=message.chat.id)
+    send_analytics(message.chat.id, message.text, user)
+
+
 @bot.message_handler(func=lambda msg: msg.text == lang.provinces_btn.get(config.BOT_LANG))
 def provinces_by_text(message: types.Message):
     text, markup = keyboards.provinces()
@@ -104,12 +112,4 @@ def check(message: types.Message):
     bot.edit_message_text(text, chat_id=msg.chat.id, message_id=msg.id, parse_mode='Markdown')
     text, markup = keyboards.menu(province_id, district_id, message.text)
     bot.send_message(message.chat.id, text, reply_markup=markup)
-    send_analytics(message.chat.id, message.text, user)
-
-
-@bot.message_handler(commands=['/count'])
-def count(message: types.Message):
-    text = User.objects.count()
-    bot.reply_to(message, text)
-    user = User.objects.get(pk=message.chat.id)
     send_analytics(message.chat.id, message.text, user)
