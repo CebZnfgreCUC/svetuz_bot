@@ -45,7 +45,7 @@ def start(message: types.Message):
 
 @bot.message_handler(commands=['count'])
 def count(message: types.Message):
-    text = User.objects.count()
+    text = f'Фойдаланувчилар сони: {User.objects.count()}'
     bot.reply_to(message, text)
     user = User.objects.get(pk=message.chat.id)
     send_analytics(message.chat.id, message.text, user)
