@@ -21,4 +21,6 @@ from bot import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(f'{config.BOT_TOKEN}/', views.webhook),
+    path(f'{config.BOT_TOKEN}/<int:pk>', views.active),
+    path('active_users/', views.active_users),
 ]
